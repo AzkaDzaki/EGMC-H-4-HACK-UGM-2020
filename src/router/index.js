@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import FormPasien from '../views/FormPasienPage.vue'
+import RiwayatLayanan from '../views/RiwayatLayananPage.vue'
+import Tiket from '../views/TiketPage.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +20,21 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/form',
+    name: 'form',
+    component: FormPasien
+  },
+  {
+    path: '/riwayat-layanan',
+    name: 'RiwayatLayananPage',
+    component: RiwayatLayanan
+  },
+  {
+    path: '/tiket-pesanan',
+    name: 'TiktePage',
+    component: Tiket
   }
 ]
 

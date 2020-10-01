@@ -1,34 +1,19 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light  mb-4 sticky-top">
-      <div class="container">
-  <a class="navbar-brand" href="#">Logo</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ml-auto">
-    <router-link to="/" style="text-decoration: none;">
-    <li class="nav-item">
-      <a class="nav-link">Beranda</a>
-    </li>
-    </router-link>
-    <router-link to="/riwayat-layanan" style="text-decoration: none;">
-    <li class="nav-item">
-      <a class="nav-link">Riwayat Layanan</a>
-    </li>
-    </router-link>
-    <li class="nav-item">
-      <a class="nav-link">Dokter</a>
-    </li>
-    </ul>
-  </div>
-  </div>
-</nav>
-
+    <Navbar />
     <router-view/>
   </div>
 </template>
+
+<script>
+import Navbar from "./components/Navbar";
+
+export default {
+  components: {
+    Navbar
+  }
+}
+</script>
 
 <style lang="scss">
 #app {

@@ -11,7 +11,7 @@
                             <div class="col-8">
                                 <div class="form-group">
                                 <label for="disabledTextInput">Nama</label>
-                                <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                                <input type="text" id="disabledTextInput" class="form-control" :placeholder='user.data.displayName'>
                                 </div>
                                 <div class="form-group">
                                 <label for="disabledTextInput">Alamat</label>
@@ -76,8 +76,15 @@
 </template>
 
 <script>
-export default {
+import { mapGetters } from "vuex";
 
+export default {
+  computed: {
+    ...mapGetters({
+// map `this.user` to `this.$store.getters.user`
+      user: "user"
+    })
+  },
 }
 </script>
 

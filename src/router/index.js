@@ -32,9 +32,7 @@ const routes = [
     path: '/form',
     name: 'form',
     component: FormPasien,
-    meta: {
-      requiresAuth: true
-   }
+
   },
   {
     path: '/riwayat-layanan',

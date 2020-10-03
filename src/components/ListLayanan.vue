@@ -2,16 +2,16 @@
     <div class="DaftarLayanan container">
         <h1>Daftar Layanan</h1>
         <div class="row">
-        <div class="col-md-6 col-lg-3 mb-3" v-for="layanan in layanan" :key="layanan.id">
+        <div class="col-md-6 col-lg-3 mb-3" v-for="layanan in all_service" :key="layanan.id" @click="GET_SERVICE(layanan.healthServiceId)">
             <router-link to="/form" style="text-decoration:none;">
             <div class="card">
             <div class="card-body flex">
-                <img v-bind:src="require('@/assets/img/' + layanan.icon)" class="icon" />
+                <!--<img v-bind:src="require('@/assets/img/' + layanan.icon)" class="icon" />-->
                 <div class="layananTeks">
-                    <h5 class="card-title">{{layanan.nama}}</h5>
-                    <p class="card-text">{{layanan.jam}}</p>
+                    <h5 class="card-title">{{layanan.healthServiceName}}</h5>
+                    <p class="card-text">{{layanan.healthServiceHour}}</p>
                     <hr>
-                    <p class="card-text-hari">{{layanan.buka}}</p>
+                    <p class="card-text-hari">{{layanan.healthServiceDays}}</p>
                 </div>
             </div>
             </div>
@@ -22,37 +22,29 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import axios from 'axios'
+
 export default {
-    data(){
-        return{
-            layanan: [
-                {
-                    nama: 'Rapid Test',
-                    jam: '09.00 - 10.00',
-                    buka: 'Setiap hari',
-                    icon: 'rapid.png'
-                },
-                {
-                    nama: 'Swab',
-                    jam: '09.00 - 15.00',
-                    buka: 'Senin - Jumat',
-                    icon: 'swab.png'
-                },
-                {
-                    nama: 'Poli Klinik Umum',
-                    jam: '09.00 - 15.00',
-                    buka: 'Senin - Jumat',
-                    icon: 'swab.png'
-                },
-                {
-                    nama: 'Poli Gigi',
-                    jam: '09.00 - 15.00',
-                    buka: 'Senin - Jumat',
-                    icon: 'swab.png'
-                }
-            ]
+    data() {
+        return {
+            all_service: null
         }
+    },
+    mounted() {
+    let config = {
+      headers: {
+        'Accept' : 'application/json',
+      }
     }
+    axios
+      .get('http://localhost:8080/egmc/api/healthService/all', config)
+      .then(response => (this.all_service = response.data))
+    },
+    methods: {
+        ...mapActions(['GET_SERVICE'])
+    }
+
 }
 </script>
 

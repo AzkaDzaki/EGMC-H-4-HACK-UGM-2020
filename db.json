@@ -1,31 +1,24 @@
 {
   "users": [
     {
-      "name": "Dennis",
-      "email": "dennis@dennis.com",
-      "password": "dennis123",
-      "ttl": "10-10-99",
-      "kontak": "0812345678",
-      "alamat": "Jl. Pogung Baru Blok F no 59, Sleman",
-      "id": 1
-    },
+      "userAddress": "Jl. Pogung Baru F 63",
+      "userBirthDate": "12 Desember 2012",
+      "userEmail": "user@user.com",
+      "userId": "user123",
+      "userName": "User",
+      "userPhoneNumber": "08123456789",
+      "booking" : [
+        {
+          
+        }
+      ]
+    }
+  ],
+  "doctor": [
     {
-      "name": "Aldian",
-      "email": "aldian@aldian.com",
-      "password": "aldian123",
-      "ttl": "10-10-99",
-      "kontak": "0812345678",
-      "alamat": "Jl. Pogung Baru Blok F no 59, Sleman",
-      "id": 2
-    },
-    {
-      "name": "Hafizhul",
-      "email": "jul@jul.com",
-      "password": "jul123",
-      "ttl": "10-10-99",
-      "kontak": "0812345678",
-      "alamat": "Jl. Pogung Baru Blok F no 59, Sleman",
-      "id": 3
+      "doctorName": "Dr. Dokter",
+      "userEmail": "dokter@dokter.com",
+      "userPassword": "dokter123"
     }
   ]
 }

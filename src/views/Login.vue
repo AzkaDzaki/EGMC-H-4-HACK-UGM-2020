@@ -32,7 +32,7 @@
                 v-model="form.password"
                 />
             </div>
-            <button type="submit" class="btn btn-primary">Masuk</button>
+            <button type="submit" class="btn btn-primary" @click="SET_USER_BIO(id)">Masuk</button>
             <br>
             <br>
             <p>Belum memiliki akun? <router-link to="/registrasi">Daftar</router-link> disini</p>
@@ -46,6 +46,8 @@
 
 <script>
 import firebase from "firebase";
+import { mapActions } from "vuex";
+
 
 export default {
   data() {
@@ -54,6 +56,7 @@ export default {
         email: "",
         password: ""
       },
+      id: 'USER-cbf04a13-8bdd-47be-b257-f43742e1456b',
       error: null
     };
   },
@@ -63,8 +66,8 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.form.email, this.form.password)
         .then(() => {
-        if(this.form.email == 'admin@admin.com'){
-          this.$router.push({name: 'TiktePage'})
+        if(this.form.email == 'fa@fa.com'){
+          this.$router.push({name: 'Home'})
         }
         else if(this.form.email == 'dokter@dokter.com'){
           this.$router.push({name: 'TiktePage'})
@@ -74,8 +77,9 @@ export default {
         .catch((err) => {
         this.error = err.message;
         });
-    }
-  }
+    },
+    ...mapActions(['SET_USER_BIO'])
+  },
 };
 </script>
 

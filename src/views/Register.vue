@@ -18,7 +18,7 @@
                 value
                 required
                 autofocus
-                v-model="form.name"
+                v-model="form.userName"
                 />
             </div>
             <div class="form-group">
@@ -31,18 +31,29 @@
                 value
                 required
                 autofocus
-                v-model="form.email"
+                v-model="form.userEmail"
                 />
             </div>
             <div class="form-group">
                 <label class="label" for="password" >Password</label>
                 <input
-                id="password"
+                id="id"
                 type="password"
                 class="form-control"
-                name="password"
+                name="id"
                 required
-                v-model="form.password"
+                v-model="form.userPassword"
+                />
+            </div>
+            <div class="form-group">
+                <label class="label" for="password" >Confirm Password</label>
+                <input
+                id="id"
+                type="password"
+                class="form-control"
+                name="id"
+                required
+                v-model="form.id"
                 />
             </div>
             <div class="row">
@@ -57,7 +68,7 @@
                 value
                 required
                 autofocus
-                v-model="form.ttl"
+                v-model="form.userBirthDate"
                 />
             </div>
               </div>
@@ -72,7 +83,7 @@
                 value
                 required
                 autofocus
-                v-model="form.kontak"
+                v-model="form.userPhoneNumber"
                 />
             </div>
               </div>
@@ -80,7 +91,7 @@
 
 
             <div class="form-group">
-                <label class="label" for="name">Alamat</label>
+                <label class="label" for="name">{{form.userAddress}}</label>
                 <input
                 id="alamat"
                 type="alamat"
@@ -89,7 +100,7 @@
                 value
                 required
                 autofocus
-                v-model="form.alamat"
+                v-model="form.userAddress"
                 />
             </div>
             <button type="submit" class="btn btn-primary">Daftar</button>
@@ -114,40 +125,64 @@ export default {
   data() {
     return {
       form: {
-        name: "",
-        email: "",
-        password: "",
-        ttl: "",
-        kontak: "",
-        alamat: ""
+        userName: "",
+        userEmail: "",
+        userPassword: "",
+        userBirthDate: "",
+        userPhoneNumber: "",
+        userAddress: ""
       },
+      info: [
+        {
+            healthRecordId: "Lalala",
+          referralReason: "Yeyeye"
+        }
+      ],
       error: null
     };
+  },
+  mounted() {
+    let config = {
+      headers: {
+        'Accept' : 'application/json',
+      }
+    }
+    axios
+      .get('http://localhost:8080/egmc/api/users?id=USER-ee11ab2e-9c5c-4010-8544-f35fdcd7c3cc', config)
+      .then(response => (this.info = response.data))
   },
   methods: {
     submit() {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.form.email, this.form.password)
+        .createUserWithEmailAndPassword(this.form.userEmail, this.form.userPassword)
         .then(data => {
           data.user
             .updateProfile({
-              displayName: this.form.name
+              displayName: this.form.userName,
+              id: this.form.id
             })
-            .then(() => {
-              this.$router.push({name: 'Home'})});
+            .then(() => {});
         })
         .catch(err => {
           this.error = err.message;
         });
-      axios.post('http://localhost:3000/users/', this.form).then(() => {
+            let config = {
+      headers: {
+        'Accept' : 'application/json',
+        "Content-Type": "application/json"
+      }
+    }
+      axios.post('http://localhost:8080/egmc/api/auth/user', this.form, config).then(() => {
         this.form.name = ''
         this.form.email = ''
         this.form.password = ''
         this.form.ttl = ''
         this.form.kontak = ''
         this.form.alamat = ''
+        this.form.id = ''
       });
+      this.$router.push({component: 'Home'})
     }
   }
 };

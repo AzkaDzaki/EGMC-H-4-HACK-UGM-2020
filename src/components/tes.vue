@@ -37,50 +37,59 @@
                     </form>
                                         <h1>Keterangan</h1>
 
-            <form action="#" ref="tempt" @submit.prevent="submit">
+            <form action="#" @submit.prevent="submit">
             <div class="form-group">
                 <label class="label" for="symptoms">Gejala</label>
-                <input ref="symptoms"
+                <input
                 id="symptoms"
                 type="symptoms"
                 class="form-control"
                 name="symptoms"
+                value
+                required
                 autofocus
+                v-model="temp.symptoms"
                 />
             </div>
             <div class="form-group">
                 <label class="label" for="healthReasons">Alasan Kesehatan</label>
-                <input ref="healthReasons"
+                <input
                 id="healthReasons"
                 type="healthReasons"
                 class="form-control"
                 name="healthReasons"
                 value
+                required
                 autofocus
+                v-model="temp.healthReasons"
                 />
             </div>
             <div class="form-group">
                 <label class="label" for="medicineAllergy" >Alergi Obat</label>
-                <input ref="medicineAllergy"
+                <input
                 id="medicineAllergy"
                 type="medicineAllergy"
                 class="form-control"
                 name="medicineAllergy"
+                required
+                v-model="temp.medicineAllergy"
                 />
             </div>
             <div class="form-group">
                 <label class="label" for="travelHistory" >Riwayat Perjalanan</label>
-                <input ref="travelHistory"
+                <input
                 id="travelHistory"
                 type="travelHistory"
                 class="form-control"
                 name="travelHistory"
+                required
+                v-model="temp.travelHistory"
                 />
-            </div>
-            <button type="submit" class="btn btn-primary" @click="submit">Konfirmasi</button>
+            </div><router-link to="/tiket-pesanan">
+            <button type="submit" class="btn btn-primary">Konfirmasi</button></router-link>
+            <button type="submit" class="btn btn-primary">Kembali</button>
 
-            </form>            <button class="btn btn-primary">Kembali</button>
-
+            </form>
 </div>
                 </div>
           </div>
@@ -89,7 +98,6 @@
             <div class="card-body flex">
                 <!--<img v-bind:src="require('@/assets/img/' + get_service.icon)" class="icon" />-->
                 <div class="layananTeks">
-                    <button @click="sub">klik</button>
                     <h5 class="card-title">{{$store.state.get_service.healthServiceName}}</h5>
                     <p class="card-text">{{$store.state.get_service.healthServiceHour}}</p>
                     <hr>
@@ -111,11 +119,25 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-        bookingSubmissionDate: '',
-        patientStatus: '',
-        serviceId: '',
-        userId: '',
-      error: null,
+      temp: {
+        symptoms: "",
+        healthReasons: "",
+        medicineAllergy: "",
+        travelHistory: "",
+      },
+      form: {
+        bookingSubmissionDate: '2120-10-03T05:10:47.444Z',
+        patientStatus: 'UMUM',
+        serviceId: this.$store.state.get_service.healthServiceId,
+        userId: this.$store.state.user_bio.userId,
+        registrationForm: {
+            healthReasons: '',
+            medicineAllergy: '',
+            symptoms: '',
+            travelHistory: ''
+        }
+      },
+      error: null
     };
   },
     computed: {
@@ -125,33 +147,20 @@ export default {
     }),
   },
   methods: {
-      sub(){
-        this.bookingSubmissionDate = '1990-10-03T05:10:47.444Z',
-        this.patientStatus = 'UMUM',
-        this.serviceId = this.$store.state.get_service.healthServiceId,
-        this.userId = this.$store.state.user_bio.userId 
-      },
     submit() {
+
+        this.form.registrationForm.symptoms = this.temp.symptoms
+        this.form.registrationForm.healthReasons = this.temp.healthReasons
+        this.form.registrationForm.medicineAllergy = this.temp.medicineAllergy
+        this.form.registrationForm.travelHistory = this.temp.travelHistory
+
         let config = {
         headers: {
             'Accept' : 'application/json',
             "Content-Type": "application/json"
         }
         }
-        axios.post('http://localhost:8080/egmc/api/users/booking', 
-        {
-            bookingSubmissionDate: this.bookingSubmissionDate,
-            patientStatus: this.patientStatus,
-            serviceId: this.serviceId,
-            userId: this.userId,
-    registrationForm: {
-                symptoms: this.$refs.tempt[0].value,
-                healthReasons: this.$refs.tempt[1].value,
-                medicineAllergy: this.$refs.tempt[2].value,
-                travelHistory: this.$refs.tempt[3].value,
-    }
-        }
-        , config).then(() => {
+        axios.post('http://localhost:8080/egmc/api/users/booking', this.form, config).then(() => {
             this.form.name = ''
             this.form.email = ''
             this.form.password = ''

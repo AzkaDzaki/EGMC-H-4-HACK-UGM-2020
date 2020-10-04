@@ -1,11 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import tes from '../components/tes.vue'
 import FormPasien from '../views/FormPasienPage.vue'
 import RiwayatLayanan from '../views/RiwayatLayananPage.vue'
 import Tiket from '../views/TiketPage.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import EditForm from '../components/EditFormPasien.vue'
+import AdminConfirm from '../components/AdminConfirm.vue'
+import AdminRiwayatLayanan from '../components/AdminRiwayatLayanan.vue'
+
 import * as firebase from 'firebase'
 import 'firebase/auth'
 
@@ -19,6 +24,11 @@ const routes = [
     meta: {
       requiresAuth: true
    }
+  },
+  {
+    path: '/tes',
+    name: 'tes',
+    component: tes
   },
   {
     path: '/about',
@@ -59,7 +69,22 @@ const routes = [
   path: '/registrasi',
   name: 'registrasi',
   component: Register,
-},
+ },
+ {
+   path: '/edit-form-pesanan',
+   name: 'edit-form-pesanan',
+   component: EditForm
+ },
+ {
+   path: '/admin/confirm',
+   name: 'admin-confirm',
+   component: AdminConfirm
+ },
+ {
+   path: '/admin/riwayat-layanan',
+   name: 'admin-riwayat-layanan',
+   component: AdminRiwayatLayanan
+ }
 ]
 
 const router = new VueRouter({

@@ -17,19 +17,23 @@ export default new Vuex.Store({
 
     get_service: null,
 
-    dokter_bio: null
+    booking_id: null,
+
+    edit_booking_id: null
   },
 
   getters: {
     user(state){
       return state.user
     },
-
     user_bio(state){
       return state.user_bio
     },
-    dokter_bio(state){
-      return state.dokter_bio
+    booking_id(state){
+      return state.booking_id
+    },
+    edit_booking_id(state){
+      return state.edit_booking_id
     }
   },
   mutations: {
@@ -45,8 +49,11 @@ export default new Vuex.Store({
     GET_SERVICE(state, data){
       state.get_service = data
     },
-    GET_DOCTOR(state, data){
-      state.dokter_bio = data
+    GET_BOOKING_ID(state, data){
+      state.booking_id = data
+    },
+    EDIT_BOOKING_ID(state, data){
+      state.edit_booking_id = data
     }
   },
 
@@ -69,10 +76,12 @@ export default new Vuex.Store({
     async GET_SERVICE({commit}, payload){
       const response = await axios.get(`http://localhost:8080/egmc/api/healthService?id=${payload}`)
       commit("GET_SERVICE", response.data)
-      if(payload == 'SER-3e5295de-0827-4600-99e4-1546bb81a3a2'){
-        let userId = 'DOC-d096bd73-d9ec-4fae-aec4-72143e8ffc6f'
-        commit("GET_DOCTOR", userId)
-      }
+    },
+    GET_BOOKING_ID({commit}, payload){
+      commit("GET_BOOKING_ID", payload)
+    },
+    EDIT_BOOKING_ID({commit}, payload){
+      commit("EDIT_BOOKING_ID", payload)
     }
   },
 

@@ -17,10 +17,6 @@
                                 <label for="disabledTextInput">Alamat</label>
                                 <input type="text" id="disabledTextInput" class="form-control" :placeholder='user_bio.userAddress'>
                                 </div>
-                                <div class="form-group">
-                                <label for="disabledTextInput">Dokter</label>
-                                <input type="text" id="disabledTextInput" class="form-control" :placeholder='$store.state.dokter_bio'>
-                                </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
@@ -35,53 +31,60 @@
                         </div>
                     </fieldset>
                     </form>
-                                        <h1>Keterangan</h1>
-
-            <form action="#" ref="tempt" @submit.prevent="submit">
-            <div class="form-group">
-                <label class="label" for="symptoms">Gejala</label>
-                <input ref="symptoms"
-                id="symptoms"
-                type="symptoms"
-                class="form-control"
-                name="symptoms"
-                autofocus
-                />
-            </div>
-            <div class="form-group">
-                <label class="label" for="healthReasons">Alasan Kesehatan</label>
-                <input ref="healthReasons"
-                id="healthReasons"
-                type="healthReasons"
-                class="form-control"
-                name="healthReasons"
-                value
-                autofocus
-                />
-            </div>
-            <div class="form-group">
-                <label class="label" for="medicineAllergy" >Alergi Obat</label>
-                <input ref="medicineAllergy"
-                id="medicineAllergy"
-                type="medicineAllergy"
-                class="form-control"
-                name="medicineAllergy"
-                />
-            </div>
-            <div class="form-group">
-                <label class="label" for="travelHistory" >Riwayat Perjalanan</label>
-                <input ref="travelHistory"
-                id="travelHistory"
-                type="travelHistory"
-                class="form-control"
-                name="travelHistory"
-                />
-            </div>
-            <button type="submit" class="btn btn-primary" @click="submit">Konfirmasi</button>
-
-            </form>            <button class="btn btn-primary">Kembali</button>
-
-</div>
+                    <h1>Keterangan</h1>
+                    <form action="#" ref="tempt" @submit.prevent="submit">
+                    <div class="form-group">
+                        <label class="label" for="symptoms">Gejala</label>
+                        <input ref="symptoms"
+                        id="symptoms"
+                        type="symptoms"
+                        class="form-control"
+                        name="symptoms"
+                        autofocus
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="healthReasons">Alasan Kesehatan</label>
+                        <input ref="healthReasons"
+                        id="healthReasons"
+                        type="healthReasons"
+                        class="form-control"
+                        name="healthReasons"
+                        value
+                        autofocus
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="medicineAllergy" >Alergi Obat</label>
+                        <input ref="medicineAllergy"
+                        id="medicineAllergy"
+                        type="medicineAllergy"
+                        class="form-control"
+                        name="medicineAllergy"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="travelHistory" >Riwayat Perjalanan</label>
+                        <input ref="travelHistory"
+                        id="travelHistory"
+                        type="travelHistory"
+                        class="form-control"
+                        name="travelHistory"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingSubmissionDate" class="">Pilih Waktu Periksa</label>
+                        <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="bookingSubmissionDate" v-model="bookingSubmissionDate">
+                    </div>
+                    <div class="form-check" @click="sub" style="text-align: left">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Ya, data yang saya isikan adalah benar</label>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary ml-2">Konfirmasi</button>
+                    <button class="btn btn-outline-secondary" style="background-color:#fff;"><router-link to="/" style="text-decoration:none;color:#6c757d;">Kembali</router-link></button>
+                    </form>            
+                </div>
                 </div>
           </div>
           <div class="col-3">
@@ -89,7 +92,6 @@
             <div class="card-body flex">
                 <!--<img v-bind:src="require('@/assets/img/' + get_service.icon)" class="icon" />-->
                 <div class="layananTeks">
-                    <button @click="sub">klik</button>
                     <h5 class="card-title">{{$store.state.get_service.healthServiceName}}</h5>
                     <p class="card-text">{{$store.state.get_service.healthServiceHour}}</p>
                     <hr>
@@ -115,18 +117,19 @@ export default {
         patientStatus: '',
         serviceId: '',
         userId: '',
+        bookingSubmissionId: '',
       error: null,
     };
   },
     computed: {
     ...mapGetters({
 // map `this.user` to `this.$store.getters.user`
-      user_bio: "user_bio"
+      user_bio: "user_bio",
+      booking_id: "booking_id"
     }),
   },
   methods: {
       sub(){
-        this.bookingSubmissionDate = '1990-10-03T05:10:47.444Z',
         this.patientStatus = 'UMUM',
         this.serviceId = this.$store.state.get_service.healthServiceId,
         this.userId = this.$store.state.user_bio.userId 
@@ -151,14 +154,11 @@ export default {
                 travelHistory: this.$refs.tempt[3].value,
     }
         }
-        , config).then(() => {
-            this.form.name = ''
-            this.form.email = ''
-            this.form.password = ''
-            this.form.ttl = ''
-            this.form.kontak = ''
-            this.form.alamat = ''
-            this.form.id = ''
+        , config).then(res => {
+            this.bookingSubmissionId = res.data.bookingSubmissionId
+            console.log(this.bookingSubmissionId)
+            this.$store.dispatch('GET_BOOKING_ID', this.bookingSubmissionId)
+            this.$router.push({name: 'TiktePage'})
         });
         },
   }

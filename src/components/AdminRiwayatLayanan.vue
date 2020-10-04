@@ -21,7 +21,7 @@
                 <td>{{history.bookingSubmissionDate[2]}}-{{history.bookingSubmissionDate[1]}}-{{history.bookingSubmissionDate[0]}}</td>
                 <td>{{history.bookingSubmissionDate[3]}}:{{history.bookingSubmissionDate[4]}}</td>
                 <td>{{history.bookingSubmissionStatus}}</td>
-                <td><span style="cursor:pointer;" @click="edit(history.bookingSubmissionId)">Edit</span> | <span>Delete</span></td>
+                <td style="cursor:pointer;" @click="edit(history.bookingSubmissionId)">Edit</td>
                 </tr>
             </tbody>
             </table>
@@ -52,19 +52,19 @@ export default {
     methods: {
         edit(bookingSubmissionId){
             this.$store.dispatch('EDIT_BOOKING_ID', bookingSubmissionId)
-            this.$router.push({name: 'edit-form-pesanan'})
+            this.$router.push({name: 'admin-confirm'})
 
         },
         del(){
-                            let config = {
-                headers: {
-                    'Accept' : 'application/json',
-                    "Content-Type": "application/json"
-                }
-                }
-      axios.delete('http://localhost:8080/egmc/api/users/booking?id=SUB-25b8c2b3-8226-4851-b78d-bcbc8efc4cec', config).then(() =>{
-          this.history.splice(0,1)
-      })
+        let config = {
+            headers: {
+                'Accept' : 'application/json',
+                "Content-Type": "application/json"
+            }
+        }
+        axios.delete('http://localhost:8080/egmc/api/users/booking?id=SUB-25b8c2b3-8226-4851-b78d-bcbc8efc4cec', config).then(() =>{
+            this.history.splice(0,1)
+        })
     }
     }
 }

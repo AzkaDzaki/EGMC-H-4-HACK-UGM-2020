@@ -32,7 +32,7 @@
                 v-model="form.password"
                 />
             </div>
-            <button type="submit" class="btn btn-primary" @click="SET_USER_BIO(id)">Masuk</button>
+            <button type="submit" class="btn btn-primary">Masuk</button>
             <br>
             <br>
             <p>Belum memiliki akun? <router-link to="/registrasi">Daftar</router-link> disini</p>
@@ -46,8 +46,6 @@
 
 <script>
 import firebase from "firebase";
-import { mapActions } from "vuex";
-
 
 export default {
   data() {
@@ -56,7 +54,7 @@ export default {
         email: "",
         password: ""
       },
-      id: 'USER-cbf04a13-8bdd-47be-b257-f43742e1456b',
+      id: null,
       error: null
     };
   },
@@ -66,11 +64,20 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.form.email, this.form.password)
         .then(() => {
-        if(this.form.email == 'fa@fa.com'){
+        if(this.form.email == 'user@user.com'){
+          this.id = 'USER-843c2a67-c99b-462f-a70c-d172bc2d11ae'
           this.$router.push({name: 'Home'})
+          this.$store.dispatch('SET_USER_BIO', this.id)
         }
         else if(this.form.email == 'dokter@dokter.com'){
+          this.id = 'DOC-d096bd73-d9ec-4fae-aec4-72143e8ffc6f'
           this.$router.push({name: 'TiktePage'})
+          this.$store.dispatch('SET_USER_BIO', this.id)
+        }
+        else if(this.form.email == 'admin@admin.com'){
+          this.id = 'USER-843c2a67-c99b-462f-a70c-d172bc2d11ae'
+          this.$router.push({name: 'admin-riwayat-layanan'})
+          this.$store.dispatch('SET_USER_BIO', this.id)
         }
         else{
         this.$router.push({name: 'Home'})}})
@@ -78,7 +85,6 @@ export default {
         this.error = err.message;
         });
     },
-    ...mapActions(['SET_USER_BIO'])
   },
 };
 </script>

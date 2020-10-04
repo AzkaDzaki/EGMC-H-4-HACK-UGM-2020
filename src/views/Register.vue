@@ -58,40 +58,38 @@
             </div>
             <div class="row">
               <div class="col-6">
-            <div class="form-group">
-                <label class="label" for="name">Tanggal Lahir</label>
-                <input
-                id="ttl"
-                type="ttl"
-                class="form-control"
-                name="ttl"
-                value
-                required
-                autofocus
-                v-model="form.userBirthDate"
-                />
-            </div>
+                <div class="form-group">
+                    <label class="label" for="name">Tanggal Lahir</label>
+                    <input
+                    id="ttl"
+                    type="ttl"
+                    class="form-control"
+                    name="ttl"
+                    value
+                    required
+                    autofocus
+                    v-model="form.userBirthDate"
+                    />
+                </div>
               </div>
               <div class="col-6">
-            <div class="form-group">
-                <label class="label" for="name">Kontak</label>
-                <input
-                id="kontak"
-                type="kontak"
-                class="form-control"
-                name="kontak"
-                value
-                required
-                autofocus
-                v-model="form.userPhoneNumber"
-                />
-            </div>
+                <div class="form-group">
+                    <label class="label" for="name">Kontak</label>
+                    <input
+                    id="kontak"
+                    type="kontak"
+                    class="form-control"
+                    name="kontak"
+                    value
+                    required
+                    autofocus
+                    v-model="form.userPhoneNumber"
+                    />
+                </div>
               </div>
             </div>
-
-
             <div class="form-group">
-                <label class="label" for="name">{{form.userAddress}}</label>
+                <label class="label" for="name">Alamat</label>
                 <input
                 id="alamat"
                 type="alamat"
@@ -120,6 +118,7 @@
 <script>
 import firebase from "firebase";
 import axios from 'axios'
+
 
 export default {
   data() {
@@ -162,17 +161,19 @@ export default {
               displayName: this.form.userName,
               id: this.form.id
             })
-            .then(() => {});
+            .then(() => {
+                this.$router.push({name: 'Home'})
+            });
         })
         .catch(err => {
           this.error = err.message;
         });
-            let config = {
-      headers: {
-        'Accept' : 'application/json',
-        "Content-Type": "application/json"
+      let config = {
+        headers: {
+          'Accept' : 'application/json',
+          "Content-Type": "application/json"
+        }
       }
-    }
       axios.post('http://localhost:8080/egmc/api/auth/user', this.form, config).then(() => {
         this.form.name = ''
         this.form.email = ''
@@ -183,7 +184,7 @@ export default {
         this.form.id = ''
       });
       this.$router.push({component: 'Home'})
-    }
+    },
   }
 };
 </script>

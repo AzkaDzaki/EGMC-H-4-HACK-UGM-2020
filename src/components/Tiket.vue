@@ -9,19 +9,36 @@
                     <tbody>
                         <tr>
                         <th scope="row">Nama</th>
-                        <td>Dennis Bagaskara</td>
+                        <td>{{booking.patientDto.userName}}</td>
                         <th scope="row">ID</th>
-                        <td>14045</td>
+                        <td>{{booking.bookingSubmissionId}}</td>
                         </tr>
                         <tr>
                         <th scope="row">Layanan</th>
-                        <td>Rapid Test</td>
+                        <td>{{booking.healthServiceDto.healthServiceName}}</td>
                         <th scope="row">Status</th>
-                        <td>Mahasiswa</td>
+                        <td>{{booking.patientStatus}}</td>
                         </tr>
                         <tr>
                         <th scope="row">Waktu Layanan</th>
-                        <td>22/09/2020  |  Pukul 11.00</td>
+                        <td>{{booking.bookingSubmissionDate[2]}}-{{booking.bookingSubmissionDate[1]}}-{{booking.bookingSubmissionDate[0]}} | {{booking.bookingSubmissionDate[3]}}:{{booking.bookingSubmissionDate[4]}}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <hr>
+                    <table class="table table-borderless" style="text-align: left;">
+                    <tbody>
+                        <tr>
+                        <th scope="row">Gejala</th>
+                        <td>{{booking.registrationForm.symptoms}}</td>
+                        <th scope="row">Alergi</th>
+                        <td>{{booking.registrationForm.medicineAllergy}}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Alasan Kesehatan</th>
+                        <td>{{booking.registrationForm.healthReasons}}</td>
+                        <th scope="row">Riwayat Perjalanan</th>
+                        <td>{{booking.registrationForm.travelHistory}}</td>
                         </tr>
                     </tbody>
                     </table>
@@ -29,25 +46,48 @@
                     <router-link to="/riwayat-layanan">
                     <button type="button" class="btn" style="margin-left:10px; padding-left:20px; padding-right:20px;">Konfirmasi</button>
                     </router-link>
-                    <button type="button" class="btn btn-outline" style=" padding-left:20px; padding-right:20px;">Kembali</button>
+                    <button class="btn btn-outline-secondary" style="background-color:#fff;"><router-link to="" style="text-decoration:none;color:#6c757d;">Kembali</router-link></button>
                     </div>
                 </div>
                 </div>
           </div>
           <div class="col-3">
-                <div class="card">
-                <div class="card-body">
-                    <p>StatistikCovid</p>
+            <div class="card">
+            <div class="card-body flex">
+                <!--<img v-bind:src="require('@/assets/img/' + get_service.icon)" class="icon" />-->
+                <div class="layananTeks">
+                    <h5 class="card-title">{{$store.state.get_service.healthServiceName}}</h5>
+                    <p class="card-text">{{$store.state.get_service.healthServiceHour}}</p>
+                    <hr>
+                    <p class="card-text-hari">{{$store.state.get_service.healthServiceDays}}</p>
                 </div>
-                </div>
+            </div>
+            </div>
           </div>
       </div>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios'
 
+export default {
+    data(){
+        return{
+            booking_id: this.$store.state.booking_id,
+            booking: null
+        }
+    },
+    mounted() {
+    let config = {
+      headers: {
+        'Accept' : 'application/json',
+      }
+    }
+    axios
+      .get(`http://localhost:8080/egmc/api/users/booking?id=${this.booking_id}`, config)
+      .then(response => (this.booking = response.data))
+    },
 }
 </script>
 

@@ -20,7 +20,7 @@ export default {
       }
     }
     axios
-      .get(`http://localhost:8080/egmc/api/users/history`, config)
+      .get(`http://localhost:8800/egmc/api/users/history`, config)
       .then(response => (this.tes = response.data))
     },
 }

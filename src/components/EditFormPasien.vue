@@ -36,61 +36,58 @@
                     </fieldset>
                     </form>
                     <h1>Keterangan</h1>
-                                <form action="#" ref="tempt" @submit.prevent="submit">
-            <div class="form-group">
-                <label class="label" for="symptoms">Gejala</label>
-                <input ref="symptoms"
-                id="symptoms"
-                type="symptoms"
-                class="form-control"
-                name="symptoms"
-                autofocus
-                :placeholder="edit_booking.registrationForm.symptoms"
-                />
-            </div>
-            <div class="form-group">
-                <label class="label" for="healthReasons">Alasan Kesehatan</label>
-                <input ref="healthReasons"
-                id="healthReasons"
-                type="healthReasons"
-                class="form-control"
-                name="healthReasons"
-                value
-                autofocus
-                :placeholder="edit_booking.registrationForm.healthReasons"
-                />
-            </div>
-            <div class="form-group">
-                <label class="label" for="medicineAllergy" >Alergi Obat</label>
-                <input ref="medicineAllergy"
-                id="medicineAllergy"
-                type="medicineAllergy"
-                class="form-control"
-                name="medicineAllergy"
-                :placeholder="edit_booking.registrationForm.medicineAllergy"
-                />
-            </div>
-            <div class="form-group">
-                <label class="label" for="travelHistory" >Riwayat Perjalanan</label>
-                <input ref="travelHistory"
-                id="travelHistory"
-                type="travelHistory"
-                class="form-control"
-                name="travelHistory"
-                :placeholder="edit_booking.registrationForm.travelHistory"
-                />
-            </div>
-            <div class="form-group">
-                <label for="bookingSubmissionDate" class="col-2 col-form-label">Pilih Waktu Periksa{{edit_booking.bookingSubmissionDate[0]}}</label>
-                <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="bookingSubmissionDate" v-model="edit_booking.bookingSubmissionDate">
-            </div>
-            <div class="form-check" @click="sub" style="text-align: left">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Ya, data yang saya isikan adalah benar</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Update</button>
-            <button class="btn">Kembali</button>
-            </form>   
+                    <form action="#" ref="tempt" @submit.prevent="submit">
+                    <div class="form-group">
+                        <label class="label" for="symptoms">Gejala</label>
+                        <input ref="symptoms"
+                        id="symptoms"
+                        type="symptoms"
+                        class="form-control"
+                        name="symptoms"
+                        autofocus
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="healthReasons">Alasan Periksa</label>
+                        <input ref="healthReasons"
+                        id="healthReasons"
+                        type="healthReasons"
+                        class="form-control"
+                        name="healthReasons"
+                        value
+                        autofocus
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="medicineAllergy" >Alergi Obat</label>
+                        <input ref="medicineAllergy"
+                        id="medicineAllergy"
+                        type="medicineAllergy"
+                        class="form-control"
+                        name="medicineAllergy"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="travelHistory" >Riwayat Perjalanan</label>
+                        <input ref="travelHistory"
+                        id="travelHistory"
+                        type="travelHistory"
+                        class="form-control"
+                        name="travelHistory"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingSubmissionDate" class="">Pilih Waktu Periksa</label>
+                        <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="bookingSubmissionDate" v-model="bookingSubmissionDate">
+                    </div>
+                    <div class="form-check" @click="sub" style="text-align: left">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Ya, data yang saya isikan adalah benar</label>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary ml-2">Konfirmasi</button>
+                    <button class="btn btn-outline-secondary" style="background-color:#fff; color:#000" @click="$router.go(-1)">Kembali</button>
+                    </form>   
        
 </div>
                 </div>
@@ -111,6 +108,8 @@ export default {
         edit_booking_id: this.$store.state.edit_booking_id,
         edit_booking: null,
       error: null,
+      bookingSubmissionDate: '',
+        patientStatus: '',
     };
   },
     mounted() {
@@ -120,7 +119,7 @@ export default {
       }
     }
     axios
-      .get(`http://localhost:8080/egmc/api/users/booking?id=${this.edit_booking_id}`, config)
+      .get(`http://localhost:8800/egmc/api/users/booking?id=${this.edit_booking_id}`, config)
       .then(response => (this.edit_booking = response.data))
     },
   methods: {
@@ -134,10 +133,21 @@ export default {
             "Content-Type": "application/json"
         }
         }
-        axios.put(`http://localhost:8080/egmc/api/admin/booking/confirm?id=${this.edit_booking_id}`, 
+        axios.put(`http://localhost:8800/egmc/api/users/booking`, 
         {
+          bookingSubmissionDate: this.bookingSubmissionDate,
+          patientStatus: this.patientStatus,
+          bookingSubmissionId: this.edit_booking_id,
+          registrationForm: {
+            healthReasons: this.$refs.tempt[1].value,
+            medicineAllergy: this.$refs.tempt[2].value,
+            symptoms: this.$refs.tempt[0].value,
+            travelHistory: this.$refs.tempt[3].value
         }
-        , config)
+        }
+        , config).then(() => {
+          this.$router.go(-1)
+        })
         },
   }
 };

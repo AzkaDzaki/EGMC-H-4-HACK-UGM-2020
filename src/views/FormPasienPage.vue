@@ -44,7 +44,7 @@
                         />
                     </div>
                     <div class="form-group">
-                        <label class="label" for="healthReasons">Alasan Kesehatan</label>
+                        <label class="label" for="healthReasons">Alasan Periksa</label>
                         <input ref="healthReasons"
                         id="healthReasons"
                         type="healthReasons"
@@ -141,7 +141,7 @@ export default {
             "Content-Type": "application/json"
         }
         }
-        axios.post('http://localhost:8080/egmc/api/users/booking', 
+        axios.post('http://localhost:8800/egmc/api/users/booking', 
         {
             bookingSubmissionDate: this.bookingSubmissionDate,
             patientStatus: this.patientStatus,

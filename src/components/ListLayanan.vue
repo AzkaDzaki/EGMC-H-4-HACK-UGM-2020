@@ -38,7 +38,7 @@ export default {
       }
     }
     axios
-      .get('http://localhost:8080/egmc/api/healthService/all', config)
+      .get('http://localhost:8800/egmc/api/healthService/all', config)
       .then(response => (this.all_service = response.data))
     },
     methods: {

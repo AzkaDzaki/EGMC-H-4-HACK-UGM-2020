@@ -1,10 +1,6 @@
 <template>
     <div>
-        {{edit_booking_id}}
-                    <button @click="confirm" class="btn btn-primary">Confirm</button>
-            <button @click="cancel" class="btn">Cancel</button>
-
-             <div class="Tiket container">
+        <div class="Tiket container">
           <div class="">
                 <div class="card">
                 <div class="card-body">
@@ -13,19 +9,19 @@
                     <tbody>
                         <tr>
                         <th scope="row">Nama</th>
-                        <td>asd</td>
+                        <td>{{edit_booking.patientDto.userName}}</td>
                         <th scope="row">ID</th>
-                        <td>asd</td>
+                        <td>{{edit_booking.bookingSubmissionId}}</td>
                         </tr>
                         <tr>
                         <th scope="row">Layanan</th>
-                        <td>asd</td>
+                        <td>{{edit_booking.healthServiceDto.healthServiceName}}</td>
                         <th scope="row">Status</th>
-                        <td>ads</td>
+                        <td>{{edit_booking.patientStatus}}</td>
                         </tr>
                         <tr>
                         <th scope="row">Waktu Layanan</th>
-                        <td>asd</td>
+                        <td>{{edit_booking.bookingSubmissionDate[2]}}-{{edit_booking.bookingSubmissionDate[1]}}-{{edit_booking.bookingSubmissionDate[0]}} | {{edit_booking.bookingSubmissionDate[3]}}:{{edit_booking.bookingSubmissionDate[4]}}</td>
                         </tr>
                     </tbody>
                     </table>
@@ -34,21 +30,21 @@
                     <tbody>
                         <tr>
                         <th scope="row">Gejala</th>
-                        <td>asd</td>
+                        <td>{{edit_booking.registrationForm.symptoms}}</td>
                         <th scope="row">Alergi</th>
-                        <td>asd</td>
+                        <td>{{edit_booking.registrationForm.medicineAllergy}}</td>
                         </tr>
                         <tr>
-                        <th scope="row">Alasan Kesehatan</th>
-                        <td>asd</td>
+                        <th scope="row">Alasan Periksa</th>
+                        <td>{{edit_booking.registrationForm.healthReasons}}</td>
                         <th scope="row">Riwayat Perjalanan</th>
-                        <td>asd</td>
+                        <td>{{edit_booking.registrationForm.travelHistory}}</td>
                         </tr>
                     </tbody>
                     </table>
                     <div class="flex">
                     <button @click="confirm" class="btn btn-primary ml-2">Confirm</button>
-                    <button  @click="cancel" class="btn btn-outline-secondary" style="background-color:#fff;"><router-link to="" style="text-decoration:none;color:red;">Cancel</router-link></button>
+                    <button  @click="cancel" class="btn" style="background-color:#d9543f;" >Cancel</button>
                     </div>
                 </div>
                 </div>
@@ -76,7 +72,7 @@ export default {
       }
     }
     axios
-      .get(`http://localhost:8080/egmc/api/users/booking?id=${this.edit_booking_id}`, config)
+      .get(`http://localhost:8800/egmc/api/users/booking?id=${this.edit_booking_id}`, config)
       .then(response => (this.edit_booking = response.data))
     },
   methods: {
@@ -90,11 +86,11 @@ export default {
             "Content-Type": "application/json"
         }
         }
-        axios.put(`http://localhost:8080/egmc/api/admin/booking/confirm?id=${this.edit_booking_id}`, 
+        axios.put(`http://localhost:8800/egmc/api/admin/booking/confirm?id=${this.edit_booking_id}`, 
         {
         }
         , config).then(() => {
-            this.$router.push({name: 'admin-riwayat-layanan'})
+            this.$router.push({name: 'admin-home'})
         })
         },
     cancel(){
@@ -104,9 +100,9 @@ export default {
             "Content-Type": "application/json"
         }
         }
-        axios.put(`http://localhost:8080/egmc/api/admin/booking/cancel?id=${this.edit_booking_id}`
+        axios.put(`http://localhost:8800/egmc/api/admin/booking/cancel?id=${this.edit_booking_id}`
         , config).then(() => {
-            this.$router.push({name: 'admin-riwayat-layanan'})
+            this.$router.push({name: 'admin-home'})
         })
     }
   }
@@ -151,5 +147,10 @@ export default {
 .btn-outline{
     background-color: #fff;
     color: #336CFB;
+}
+
+.table td, .table th{
+    border-top: none;
+    padding-left: 0;
 }
 </style>

@@ -71,12 +71,12 @@ export default {
         }
         else if(this.form.email == 'dokter@dokter.com'){
           this.id = 'DOC-d096bd73-d9ec-4fae-aec4-72143e8ffc6f'
-          this.$router.push({name: 'TiktePage'})
+          this.$router.push({name: 'dokter-riwayat-layanan'})
           this.$store.dispatch('SET_USER_BIO', this.id)
         }
         else if(this.form.email == 'admin@admin.com'){
-          this.id = 'USER-843c2a67-c99b-462f-a70c-d172bc2d11ae'
-          this.$router.push({name: 'admin-riwayat-layanan'})
+          this.id = 'USER-989c4fb3-865a-40c9-8e47-0084c6c5712a'
+          this.$router.push({name: 'admin-home'})
           this.$store.dispatch('SET_USER_BIO', this.id)
         }
         else{

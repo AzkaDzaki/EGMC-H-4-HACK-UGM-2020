@@ -52,7 +52,7 @@
                 />
             </div>
             <div class="form-group">
-                <label class="label" for="healthReasons">Alasan Kesehatan</label>
+                <label class="label" for="healthReasons">Alasan Periksa</label>
                 <input
                 id="healthReasons"
                 type="healthReasons"
@@ -87,7 +87,7 @@
                 />
             </div><router-link to="/tiket-pesanan">
             <button type="submit" class="btn btn-primary">Konfirmasi</button></router-link>
-            <button type="submit" class="btn btn-primary">Kembali</button>
+            <button class="btn btn-primary" style="background-color:#d9543f;" @click="$router.go(-1)">Kembali</button>
 
             </form>
 </div>
@@ -154,7 +154,7 @@ export default {
             "Content-Type": "application/json"
         }
         }
-        axios.post('http://localhost:8080/egmc/api/users/booking', this.form, config).then(() => {
+        axios.post('http://localhost:8800/egmc/api/users/booking', this.form, config).then(() => {
             this.form.name = ''
             this.form.email = ''
             this.form.password = ''

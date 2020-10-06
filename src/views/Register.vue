@@ -147,7 +147,7 @@ export default {
       }
     }
     axios
-      .get('http://localhost:8080/egmc/api/users?id=USER-ee11ab2e-9c5c-4010-8544-f35fdcd7c3cc', config)
+      .get('http://localhost:8800/egmc/api/users?id=USER-ee11ab2e-9c5c-4010-8544-f35fdcd7c3cc', config)
       .then(response => (this.info = response.data))
   },
   methods: {
@@ -174,7 +174,7 @@ export default {
           "Content-Type": "application/json"
         }
       }
-      axios.post('http://localhost:8080/egmc/api/auth/user', this.form, config).then(() => {
+      axios.post('http://localhost:8800/egmc/api/auth/user', this.form, config).then(() => {
         this.form.name = ''
         this.form.email = ''
         this.form.password = ''

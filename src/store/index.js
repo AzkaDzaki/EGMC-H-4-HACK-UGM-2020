@@ -19,7 +19,11 @@ export default new Vuex.Store({
 
     booking_id: null,
 
-    edit_booking_id: null
+    edit_booking_id: null,
+
+    rec_id: null,
+
+    service_id: null
   },
 
   getters: {
@@ -34,6 +38,12 @@ export default new Vuex.Store({
     },
     edit_booking_id(state){
       return state.edit_booking_id
+    },
+    rec_id(state){
+      return state.rec_id
+    },
+    service_id(state) {
+      return state.service_id
     }
   },
   mutations: {
@@ -54,6 +64,12 @@ export default new Vuex.Store({
     },
     EDIT_BOOKING_ID(state, data){
       state.edit_booking_id = data
+    },
+    GET_REC_ID(state, data){
+      state.rec_id = data
+    },
+    GET_SERVICE_ID(state, data){
+      state.service_id = data
     }
   },
 
@@ -70,11 +86,11 @@ export default new Vuex.Store({
       }
     },
     async SET_USER_BIO({ commit }, payload){
-      const response = await axios.get(`http://localhost:8080/egmc/api/users?id=${payload}`)
+      const response = await axios.get(`http://localhost:8800/egmc/api/users?id=${payload}`)
       commit("SET_USER_BIO", response.data)
     },
     async GET_SERVICE({commit}, payload){
-      const response = await axios.get(`http://localhost:8080/egmc/api/healthService?id=${payload}`)
+      const response = await axios.get(`http://localhost:8800/egmc/api/healthService?id=${payload}`)
       commit("GET_SERVICE", response.data)
     },
     GET_BOOKING_ID({commit}, payload){
@@ -82,6 +98,12 @@ export default new Vuex.Store({
     },
     EDIT_BOOKING_ID({commit}, payload){
       commit("EDIT_BOOKING_ID", payload)
+    },
+    GET_REC_ID({commit}, payload){
+      commit("GET_REC_ID", payload)
+    },
+    GET_SERVICE_ID({commit}, payload){
+      commit("GET_SERVICE_ID", payload)
     }
   },
 

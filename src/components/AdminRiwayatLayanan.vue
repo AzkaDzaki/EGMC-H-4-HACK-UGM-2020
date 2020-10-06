@@ -2,7 +2,7 @@
   <div class="RiwayatLayanan container">
         <div class="card">
         <div class="card-body">
-            <h1>Riwayat Layanan</h1>
+            <h1>Daftar Pesanan</h1>
             <table class="table">
             <thead class="">
                 <tr>
@@ -15,14 +15,24 @@
                 </tr>
             </thead>
             <tbody v-for="history in history" :key="history.bookingSubmissionId">
+                <template v-if="history.bookingSubmissionStatus !== 'FINISHED'" style="display:none;">
                 <tr>
                 <th scope="row" style="padding-left:1.25rem;">{{history.healthServiceDto.healthServiceName}}</th>
                 <td>{{history.patientDto.userName}}</td>
                 <td>{{history.bookingSubmissionDate[2]}}-{{history.bookingSubmissionDate[1]}}-{{history.bookingSubmissionDate[0]}}</td>
                 <td>{{history.bookingSubmissionDate[3]}}:{{history.bookingSubmissionDate[4]}}</td>
-                <td>{{history.bookingSubmissionStatus}}</td>
-                <td style="cursor:pointer;" @click="edit(history.bookingSubmissionId)">Edit</td>
+                <template v-if="history.bookingSubmissionStatus == 'ORDERED'">
+                <td style="color:#f0ad4e; font-weight:bold;">{{history.bookingSubmissionStatus}}</td>
+                </template>
+                <template v-if="history.bookingSubmissionStatus == 'CONFIRMED'">
+                <td style="color:#5cb85c; font-weight:bold;">{{history.bookingSubmissionStatus}}</td>
+                </template>
+                <template v-if="history.bookingSubmissionStatus == 'CANCELLED'">
+                <td style="color:#d9543f; font-weight:bold;">{{history.bookingSubmissionStatus}}</td>
+                </template>
+                <td style="cursor:pointer;" @click="edit(history.bookingSubmissionId)"><span class="label" style="background-color:#f0ad4e; padding: 8px;color:#fff;border-radius:8px">Detail</span></td>
                 </tr>
+                </template>
             </tbody>
             </table>
         </div>
@@ -46,7 +56,7 @@ export default {
       }
     }
     axios
-      .get(`http://localhost:8080/egmc/api/admin/findAll/booking`, config)
+      .get(`http://localhost:8800/egmc/api/admin/findAll/booking`, config)
       .then(response => (this.history = response.data))
     },
     methods: {
@@ -62,7 +72,7 @@ export default {
                 "Content-Type": "application/json"
             }
         }
-        axios.delete('http://localhost:8080/egmc/api/users/booking?id=SUB-25b8c2b3-8226-4851-b78d-bcbc8efc4cec', config).then(() =>{
+        axios.delete('http://localhost:8800/egmc/api/users/booking?id=SUB-25b8c2b3-8226-4851-b78d-bcbc8efc4cec', config).then(() =>{
             this.history.splice(0,1)
         })
     }

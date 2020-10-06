@@ -10,26 +10,24 @@
                     <div class="col-4">
                         <div class="card-covid">
                             <p class="covid-title">Kasus Positif</p>
-                            <p class="covid-item">{{covid.kasusPosi}} Jiwa</p>
+                            <p class="covid-item">{{covid.data[21].kasusPosi}} Jiwa</p>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="card-covid">
                             <p class="covid-title">Kasus Sembuh</p>
-                            <p class="covid-item">{{covid.kasusSemb}} Jiwa</p>
+                            <p class="covid-item">{{covid.data[21].kasusSemb}} Jiwa</p>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="card-covid">
                             <p class="covid-title">Kasus Meninggal</p>
-                            <p class="covid-item">{{covid.kasusMeni}} Jiwa</p>
+                            <p class="covid-item">{{covid.data[21].kasusMeni}} Jiwa</p>
                         </div>
                     </div>
                 </div>
                 <br>
-                <router-link to="/statistik-covid" style="text-decoration:none;">
-                <p style="text-align:right; color:#336CFB; font-size:14px;">Lihat Semua</p>
-                </router-link>
+      <!--          <p style="text-align:right; color:#336CFB; font-size:14px;" @click="$router.push('/tabel-covid')">Lihat Semua</p> -->
             </div>
             </div>
         </div>
@@ -48,7 +46,7 @@ export default {
     mounted () {
     axios
       .get('https://indonesia-covid-19.mathdro.id/api/provinsi')
-      .then(response => (this.covid = response.data.data[21]))
+      .then(response => (this.covid = response.data))
   }
 }
 </script>

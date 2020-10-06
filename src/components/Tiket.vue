@@ -35,7 +35,7 @@
                         <td>{{booking.registrationForm.medicineAllergy}}</td>
                         </tr>
                         <tr>
-                        <th scope="row">Alasan Kesehatan</th>
+                        <th scope="row">Alasan Periksa</th>
                         <td>{{booking.registrationForm.healthReasons}}</td>
                         <th scope="row">Riwayat Perjalanan</th>
                         <td>{{booking.registrationForm.travelHistory}}</td>
@@ -85,7 +85,7 @@ export default {
       }
     }
     axios
-      .get(`http://localhost:8080/egmc/api/users/booking?id=${this.booking_id}`, config)
+      .get(`http://localhost:8800/egmc/api/users/booking?id=${this.booking_id}`, config)
       .then(response => (this.booking = response.data))
     },
 }
